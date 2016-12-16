@@ -2,7 +2,7 @@ import requests
 import uuid
 import json
 
-from lexceptions import LemonwayException
+from .lexceptions import LemonwayException
 
 
 class WebTransaction(object):
