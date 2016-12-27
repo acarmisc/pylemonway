@@ -92,3 +92,5 @@ ENV/
 venv
 *.pyc
 *.swp
+
+.DS_Store
