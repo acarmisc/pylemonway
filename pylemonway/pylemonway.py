@@ -14,7 +14,7 @@ class WebTransaction(object):
 
 
 class Wallet(object):
-    
+
     def __init__(self, **params):
         self.__dict__.update(params)
 
@@ -34,7 +34,7 @@ class LemonwayResponse(object):
     def parse_response(self):
         parsed = self.raw
         response = parsed.get('d')
-        
+
         if "WALLET" in response.keys():
             self.response_type = 'WALLET'
             self.payload = response.get('WALLET')
@@ -55,10 +55,19 @@ class LemonwayResponse(object):
 
 class Lemonway(object):
 
-    def __init__(self, login, password, customer, customer_ip='127.0.0.1', customer_ua='Mozilla/5.0 (Windows NT 6.1; WOW64)', sendbox=False, language='en', base_url=None, version='1.1'):
-        
+    def __init__(self, login, password, customer, customer_ip='127.0.0.1', customer_ua='Mozilla/5.0 (Windows NT 6.1; WOW64)', sendbox=False, language='en', base_url=None, version='1.1', auto_wallet=True):
+        """
+        First of all Lemonway needs credentials: customer, login and password. Other parameters:
+        - sendbox: specify if you like to call production API (real money!) or play in a sandbox
+        - version: specify API version to be used
+        - language: specify language for responses
+        - auto_wallet: if you do not want to handle wallet external id numbering
+                       we can do that with random generated value
+        """
+
         self.headers = {"Content-type": "application/json", "charset": "utf-8"}
         self.protocol = 'DIRECTKITJSON2'
+        self.auto_wallet = auto_wallet
         self.customer = customer
         self.login = login
         self.password = password
@@ -71,8 +80,8 @@ class Lemonway(object):
             self.webkit_card_url = 'https://webkit.lemonway.fr/%s/dev/?moneyintoken=' % customer
 
         self.endpoint = base_url or self.base_url % self.customer
-        self.common_data = dict(wlPass=self.password, wlLogin=self.login, 
-                                language=language, version=version, 
+        self.common_data = dict(wlPass=self.password, wlLogin=self.login,
+                                language=language, version=version,
                                 walletIp=customer_ip, walletUa=customer_ua)
 
     def _do(self, method, request_data, version=None):
@@ -99,6 +108,9 @@ class Lemonway(object):
         return resp.payload
 
     def wallet_register(self, data):
+        if 'wallet' not in data.keys() and self.auto_wallet == True:
+            data['wallet'] = str(uuid.uuid4())
+
         resp = self._do('RegisterWallet', data)
         wallet = Wallet(**resp)
 
@@ -112,10 +124,8 @@ class Lemonway(object):
 
     def card_charge_page(self, data):
         resp = self._do('MoneyInWebInit', data, version='1.2')
-        transaction = WebTransaction(token=resp.get('TOKEN'), 
-                                     transaction_id=resp.get('ID'), 
+        transaction = WebTransaction(token=resp.get('TOKEN'),
+                                     transaction_id=resp.get('ID'),
                                      payment_url=self.webkit_card_url)
 
         return transaction
-
-
