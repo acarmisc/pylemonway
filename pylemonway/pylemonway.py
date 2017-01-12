@@ -93,6 +93,9 @@ class Lemonway(object):
         if version:
             composed_data['version'] = version
 
+        # fixing float to two decimal
+        for k, v in composed_data.iteritems(): composed_data[k] = '{:.2f}'.format(v) if type(v) is float else v
+        
         payload = json.dumps(dict(p=composed_data))
 
         response = requests.post(url, data=payload, headers=self.headers)
