@@ -6,7 +6,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='pylemonway',
-    version='0.1.5',
+    version='0.1.6',
     description='Python wrapper for Lemonway DIRECTKITJSON2',
     long_description='Python wrapper for Lemonway DIRECTKITJSON2',
 
