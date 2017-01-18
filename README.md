@@ -16,12 +16,12 @@ Library should be used importing it as:
 
 Next you can setup your client as:
 
-     client = Lemonway(login, password, customer, sendbox=True)
+     client = Lemonway(login, password, customer, sandbox=True)
 
 **pyLemonway** API client accept many parameters, but on top of them:
 
 - `credentials`: customer, login and password. Other parameters:
-- `sendbox`: specify if you like to call production API (real money!) or play in a sandbox
+- `sandbox`: specify if you like to call production API (real money!) or play in a sandbox
 - `version`: specify API version to be used
 - `language`: specify language for responses
 - `auto_wallet`: if you do not want to handle wallet external id numbering we can do that with random generated value (default `True`)

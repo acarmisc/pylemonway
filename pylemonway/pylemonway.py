@@ -55,10 +55,10 @@ class LemonwayResponse(object):
 
 class Lemonway(object):
 
-    def __init__(self, login, password, customer, customer_ip='127.0.0.1', customer_ua='Mozilla/5.0 (Windows NT 6.1; WOW64)', sendbox=False, language='en', base_url=None, version='1.1', auto_wallet=True):
+    def __init__(self, login, password, customer, customer_ip='127.0.0.1', customer_ua='Mozilla/5.0 (Windows NT 6.1; WOW64)', sandbox=False, language='en', base_url=None, version='1.1', auto_wallet=True):
         """
         First of all Lemonway needs credentials: customer, login and password. Other parameters:
-        - sendbox: specify if you like to call production API (real money!) or play in a sandbox
+        - sandbox: specify if you like to call production API (real money!) or play in a sandbox
         - version: specify API version to be used
         - language: specify language for responses
         - auto_wallet: if you do not want to handle wallet external id numbering
@@ -72,12 +72,14 @@ class Lemonway(object):
         self.login = login
         self.password = password
 
-        if sendbox:
+        if sandbox:
             self.base_url = base_url or 'https://sandbox-api.lemonway.fr/mb/%s/dev/directkitjson2/service.asmx'
             self.webkit_card_url = 'https://sandbox-webkit.lemonway.fr/%s/dev/?moneyintoken=' % customer
         else:
             self.base_url = base_url or 'https://api.lemonway.fr/mb/%s/dev/directkitjson2/service.asmx'
             self.webkit_card_url = 'https://webkit.lemonway.fr/%s/dev/?moneyintoken=' % customer
+
+        print self.base_url
 
         self.endpoint = base_url or self.base_url % self.customer
         self.common_data = dict(wlPass=self.password, wlLogin=self.login,
