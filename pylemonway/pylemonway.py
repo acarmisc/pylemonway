@@ -76,10 +76,8 @@ class Lemonway(object):
             self.base_url = base_url or 'https://sandbox-api.lemonway.fr/mb/%s/dev/directkitjson2/service.asmx'
             self.webkit_card_url = 'https://sandbox-webkit.lemonway.fr/%s/dev/?moneyintoken=' % customer
         else:
-            self.base_url = base_url or 'https://api.lemonway.fr/mb/%s/dev/directkitjson2/service.asmx'
-            self.webkit_card_url = 'https://webkit.lemonway.fr/%s/dev/?moneyintoken=' % customer
-
-        print self.base_url
+            self.base_url = base_url or 'https://api.lemonway.fr/mb/%s/prod/directkitjson2/service.asmx'
+            self.webkit_card_url = 'https://webkit.lemonway.fr/%s/prod/?moneyintoken=' % customer
 
         self.endpoint = base_url or self.base_url % self.customer
         self.common_data = dict(wlPass=self.password, wlLogin=self.login,
