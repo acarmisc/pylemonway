@@ -24,6 +24,16 @@ class Wallet(object):
     def is_blocked(self):
         return self.BLOCKED or False
 
+    def get_id(self):
+        return self.ID
+
+    def get_lwid(self):
+        return self.LWID
+
+    def serialize(self):
+        import json
+        return json.dumps(self.__dict__)
+
 
 class LemonwayResponse(object):
 
