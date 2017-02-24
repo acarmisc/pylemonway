@@ -200,3 +200,9 @@ class Lemonway(object):
         card = Card(**resp)
 
         return card
+
+    def card_unregister(self, data):
+        resp = self._do('UnregisterCard', data, version='1.2')
+	card = Card(**resp)
+
+        return card
