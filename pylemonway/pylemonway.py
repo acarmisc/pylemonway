@@ -34,6 +34,22 @@ class Wallet(object):
         import json
         return json.dumps(self.__dict__)
 
+class Transaction(object):
+    
+    def __init__(self, **params):
+        self.__dict__.update(params)
+
+    def __repr__(self):
+        return '<LemonwayTransaction %s>' % self.HPAY['ID']
+
+    def get_id(self):
+        return self.HPAY['ID']
+
+    def serialize(self):
+        import json
+        return json.dumps(self.__dict__)
+
+
 
 class LemonwayResponse(object):
 
