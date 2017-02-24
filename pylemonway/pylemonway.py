@@ -62,6 +62,20 @@ class TransactionHistory(object):
         import json
         return json.dumps(self.__dict__)
 
+class Card(object):
+
+    def __init__(self, **params):
+        self.__dict__.update(params)
+
+    def __repr__(self):
+        return '<LemonwayCard %s>' % self.ID
+
+    def serialize(self):
+        import json
+        return json.dumps(self.__dict__)
+
+    def get_id(self):
+        return self.ID
 
 class LemonwayResponse(object):
 
