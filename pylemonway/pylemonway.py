@@ -194,3 +194,9 @@ class Lemonway(object):
                                      payment_url=self.webkit_card_url)
 
         return transaction
+
+    def card_register(self, data):
+        resp = self._do('RegisterCard', data, version='1.2')
+        card = Card(**resp)
+
+        return card
