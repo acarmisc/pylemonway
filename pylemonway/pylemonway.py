@@ -24,6 +24,58 @@ class Wallet(object):
     def is_blocked(self):
         return self.BLOCKED or False
 
+    def get_id(self):
+        return self.ID
+
+    def get_lwid(self):
+        return self.LWID
+
+    def serialize(self):
+        import json
+        return json.dumps(self.__dict__)
+
+class Transaction(object):
+    
+    def __init__(self, **params):
+        self.__dict__.update(params)
+
+    def __repr__(self):
+        return '<LemonwayTransaction %s>' % self.HPAY['ID']
+
+    def get_id(self):
+        return self.HPAY['ID']
+
+    def serialize(self):
+        import json
+        return json.dumps(self.__dict__)
+
+
+class TransactionHistory(object):
+
+    def __init__(self, **params):
+        self.__dict__.update(params)
+
+    def __repr__(self):
+        return '<LemonwayTransactionHistory %s>' % str(uuid.uuid4())
+
+    def serialize(self):
+        import json
+        return json.dumps(self.__dict__)
+
+class Card(object):
+
+    def __init__(self, **params):
+        self.__dict__.update(params)
+
+    def __repr__(self):
+        return '<LemonwayCard %s>' % self.ID
+
+    def serialize(self):
+        import json
+        return json.dumps(self.__dict__)
+
+    def get_id(self):
+        return self.ID
 
 class LemonwayResponse(object):
 
@@ -43,6 +95,14 @@ class LemonwayResponse(object):
             self.response_type = 'MONEYINWEB'
             self.payload = response.get('MONEYINWEB')
 
+        if "CARD" in response.keys():
+            self.response_type = 'CARD'
+            self.payload = response.get('CARD')
+
+        if "TRANS" in response.keys():
+            self.response_type = 'TRANS'
+            self.payload = response.get('TRANS')
+ 
         if "E" in response.keys() and response.get('E'):
             self.error = True
             self.error_message = response.get('E').get('Msg')
@@ -134,3 +194,33 @@ class Lemonway(object):
                                      payment_url=self.webkit_card_url)
 
         return transaction
+
+    def card_register(self, data):
+        resp = self._do('RegisterCard', data, version='1.2')
+        card = Card(**resp)
+
+        return card
+
+    def card_unregister(self, data):
+        resp = self._do('UnregisterCard', data, version='1.2')
+	card = Card(**resp)
+
+        return card
+
+    def money_in_with_card_id(self,data):
+        resp = self._do('MoneyInWithCardId', data, version='1.2')
+        transaction = Transaction(**resp)
+
+        return transaction
+    
+    def refund_money_in(self,data):
+        resp = self._do('RefundMoneyIn', data, version='1.2')
+        transaction = Transaction(**resp)
+
+        return transaction
+
+    def get_wallet_trans_history(self,data):
+        resp = self._do('GetWalletTransHistory', data, version='1.2')
+        wallet_transaction_history = TransactionHistory(**resp)
+
+        return wallet_transaction_history
