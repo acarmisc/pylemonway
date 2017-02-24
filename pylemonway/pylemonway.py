@@ -218,3 +218,9 @@ class Lemonway(object):
         transaction = Transaction(**resp)
 
         return transaction
+
+    def get_wallet_trans_history(self,data):
+        resp = self._do('GetWalletTransHistory', data, version='1.2')
+        wallet_transaction_history = TransactionHistory(**resp)
+
+        return wallet_transaction_history
