@@ -206,3 +206,9 @@ class Lemonway(object):
 	card = Card(**resp)
 
         return card
+
+    def money_in_with_card_id(self,data):
+        resp = self._do('MoneyInWithCardId', data, version='1.2')
+        transaction = Transaction(**resp)
+
+        return transaction
