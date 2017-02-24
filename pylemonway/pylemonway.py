@@ -212,3 +212,9 @@ class Lemonway(object):
         transaction = Transaction(**resp)
 
         return transaction
+    
+    def refund_money_in(self,data):
+        resp = self._do('RefundMoneyIn', data, version='1.2')
+        transaction = Transaction(**resp)
+
+        return transaction
