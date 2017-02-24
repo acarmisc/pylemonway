@@ -34,7 +34,7 @@ Example
     from pylemonway.pylemonway import Lemonway
 
 
-    l = Lemonway("login", "password", "customer", sendbox=True)
+    l = Lemonway("login", "password", "customer", sandbox=True)
 
     # registering wallet
     wallet_data = dict(clientMail='frank@music.com',
