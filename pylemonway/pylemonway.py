@@ -95,6 +95,14 @@ class LemonwayResponse(object):
             self.response_type = 'MONEYINWEB'
             self.payload = response.get('MONEYINWEB')
 
+        if "CARD" in response.keys():
+            self.response_type = 'CARD'
+            self.payload = response.get('CARD')
+
+        if "TRANS" in response.keys():
+            self.response_type = 'TRANS'
+            self.payload = response.get('TRANS')
+ 
         if "E" in response.keys() and response.get('E'):
             self.error = True
             self.error_message = response.get('E').get('Msg')
