@@ -50,6 +50,18 @@ class Transaction(object):
         return json.dumps(self.__dict__)
 
 
+class TransactionHistory(object):
+
+    def __init__(self, **params):
+        self.__dict__.update(params)
+
+    def __repr__(self):
+        return '<LemonwayTransactionHistory %s>' % str(uuid.uuid4())
+
+    def serialize(self):
+        import json
+        return json.dumps(self.__dict__)
+
 
 class LemonwayResponse(object):
 
