@@ -4,14 +4,12 @@ import json
 
 from .lexceptions import LemonwayException
 
-
 class WebTransaction(object):
 
     def __init__(self, token, transaction_id, payment_url):
         self.token = token
         self.transaction_id = transaction_id
         self.payment_url = payment_url + self.token
-
 
 class Wallet(object):
 
@@ -106,6 +104,7 @@ class LemonwayResponse(object):
         if "E" in response.keys() and response.get('E'):
             self.error = True
             self.error_message = response.get('E').get('Msg')
+            self.error_code = response.get('E').get('Code')
 
         return self
 
@@ -168,7 +167,7 @@ class Lemonway(object):
         resp = LemonwayResponse(response.json()).parse_response()
 
         if resp.is_error():
-            raise LemonwayException(resp.error_message)
+            raise LemonwayException(resp.error_message, resp.error_code)
 
         return resp.payload
 
