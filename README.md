@@ -11,13 +11,13 @@ Usage
 -----
 
 Library should be used importing it as:
-
-    from pylemonway.pylemonway import Lemonway
-
+```python
+from pylemonway.pylemonway import Lemonway
+```
 Next you can setup your client as:
-
-     client = Lemonway(login, password, customer, sandbox=True)
-
+```python
+client = Lemonway(login, password, customer, sandbox=True)
+```
 **pyLemonway** API client accept many parameters, but on top of them:
 
 - `credentials`: customer, login and password. Other parameters:
@@ -28,23 +28,24 @@ Next you can setup your client as:
 
 Methods explanation to be done.
 
-Example
--------
+Example:
 
-    from pylemonway.pylemonway import Lemonway
+```python
+from pylemonway.pylemonway import Lemonway
 
 
-    l = Lemonway("login", "password", "customer", sandbox=True)
+l = Lemonway("login", "password", "customer", sandbox=True)
 
-    # registering wallet
-    wallet_data = dict(clientMail='frank@music.com',
-                       clientFirstName='Frank', clientLastName='Sinatra')
+# registering wallet
+wallet_data = dict(clientMail='frank@music.com',
+                   clientFirstName='Frank', clientLastName='Sinatra')
 
-    wallet = l.wallet_register(wallet_data)
+wallet = l.wallet_register(wallet_data)
 
-    charge_data = dict(wallet=1234, amountTot='2.00', amountCom='1.00',
-                       wkToken=uuid.uuid4().__str__(),
-                       returnUrl='http://yoursite.com', cancelUrl='http://yoursite.com',
-                       errorUrl='http://yoursite.com')
+charge_data = dict(wallet=1234, amountTot='2.00', amountCom='1.00',
+                   wkToken=uuid.uuid4().__str__(),
+                   returnUrl='http://yoursite.com', cancelUrl='http://yoursite.com',
+                   errorUrl='http://yoursite.com')
 
-    transaction_url = l.card_charge_page(charge_data)
+transaction_url = l.card_charge_page(charge_data)
+```
